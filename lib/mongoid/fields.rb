@@ -38,6 +38,9 @@ module Mongoid #:nodoc
 
       alias :id :_id
       alias :id= :_id=
+
+      # Use active model's dirty tracking system.
+      define_attribute_methods(fields.keys.map { |key| key.to_sym })
     end
 
     class << self
@@ -182,7 +185,6 @@ module Mongoid #:nodoc
         ).new(name, options).tap do |field|
           fields[name] = field
           create_accessors(name, meth, options)
-          add_dirty_methods(name)
           process_options(field)
         end
       end
