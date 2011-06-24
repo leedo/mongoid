@@ -465,7 +465,7 @@ module Mongoid # :nodoc:
       # @since 2.0.0.rc.1
       def determine_inverse_relation
         klass.relations.each_pair do |key, meta|
-          next unless relation.embedded? == meta.relation.embedded?
+          next if relation && embedded? != meta.embedded?
           if key == inverse_klass.name.underscore ||
             meta.class_name == inverse_class_name
             return key.to_sym
